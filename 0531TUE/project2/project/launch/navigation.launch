@@ -1,0 +1,34 @@
+<launch>
+
+ <arg name="map_file" default="$(find project)/maps/map.yaml"/>
+
+
+ <include file="$(find gazebo_ros)/launch/empty_world.launch">
+  <arg name="world_name" value="$(find project)/worlds/sim_world.world"/>
+ </include>
+
+
+
+ <param name="robot_description" command="$(find xacro)/xacro --inorder $(find project)/urdf/mainbot.urdf.xacro"/>
+
+
+
+  <node pkg="map_server" name="map_server" type="map_server" args="$(arg map_file)"/>
+
+
+
+  <include file="$(find project)/launch/amcl.launch"/>
+
+
+
+  <include file="$(find project)/launch/move_base.launch"/>
+
+
+
+ <node name="mainbot_spawner" pkg="gazebo_ros" type="spawn_model" args="-z 1.0 -urdf -model mainbot -param robot_description"/>
+
+ <node name="rviz" pkg="rviz" type="rviz" args="-d $(find project)/rviz/mainbot_navigation.rviz"/>
+ <node pkg="joint_state_publisher" type="joint_state_publisher" name="joint_state_publischer"/>
+  <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher"/>
+
+</launch>

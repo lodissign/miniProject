@@ -1,0 +1,10 @@
+<launch>
+
+ <param name="robot_description" command="$(find xacro)/xacro --inorder $(find project)/urdf/shelf.urdf.xacro"/>
+ <param name="use_gui" value="True"/>
+
+ <node name="rviz" pkg="rviz" type="rviz" args="-d $(find project)/rviz/urdf.rviz"/>
+ <node pkg="joint_state_publisher" type="joint_state_publisher" name="joint_state_publischer"/>
+ <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher"/>
+
+</launch>
