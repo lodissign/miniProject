@@ -32,3 +32,10 @@ https://lodissign.tistory.com/16
 [GUI 프로그래밍] 미니프로젝트_5_0603_오후
 https://lodissign.tistory.com/17
 
+0607TUE
+[GUI 프로그래밍] 미니프로젝트_6_0607_오전
+https://lodissign.tistory.com/18
+[GUI 프로그래밍] 미니프로젝트_6_0607_오후
+https://lodissign.tistory.com/19
+[GUI 프로그래밍] <발표> 미니프로젝트
+https://lodissign.tistory.com/20
