@@ -1,0 +1,415 @@
+<?xml version="1.0"?>
+<robot name="mainbot" xmlns:xacro="http://ros.org/wiki/xacro">
+
+	<xacro:include filename="$(find project)/urdf/common_properties.xacro"/>
+
+	<xacro:macro name="visual1" params="length radius color">
+                <visual>
+                        <geometry>
+                                <cylinder length="${length}" radius="${radius}"/>
+                        </geometry>
+                        <material name="${color}"/>
+                </visual>
+                <collision>
+                        <geometry>
+                                <cylinder length="${length}" radius="${radius}"/>
+                        </geometry>
+                </collision>
+        </xacro:macro>
+
+        <xacro:macro name="visual2" params="length width height color">
+                <visual>
+                        <geometry>
+                                <box size="${length} ${width} ${height}"/>
+                        </geometry>
+                        <material name="${color}"/>
+                </visual>
+                <collision>
+                        <geometry>
+                                <box size="${length} ${width} ${height}"/>
+                        </geometry>
+                </collision>
+        </xacro:macro>
+	
+        <xacro:macro name="inertial_" params="mass">
+                <inertial>
+                        <mass value="${mass}"/>
+                        <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0" />
+                </inertial>
+        </xacro:macro>
+
+	<link name="base_footprint"/>
+	<joint name="fixed" type="fixed">
+		<parent link="base_footprint"/>
+		<child link="link1"/>
+	</joint>
+
+	<link name="link1">
+		<xacro:visual2 length="1.0" width="1" height="0.05" color="blue"/>
+		<xacro:inertial_ mass="1"/>
+	</link>
+	
+	<link name="middle_wall">
+		<xacro:visual2 length="0.02" width="1" height="0.32" color="red"/>
+		<xacro:inertial_ mass="1"/>
+	</link>
+	
+	<joint name="middle_wall_joint" type="fixed">
+		<parent link="link1"/>
+		<child link="middle_wall"/>
+		<origin xyz="0 0 0.185"/>
+	</joint>
+	
+	<link name="right_wall">
+		<xacro:visual2 length="0.02" width="1" height="0.32" color="red"/>
+		<xacro:inertial_ mass="1"/>
+	</link>
+	
+	<joint name="right_wall_joint" type="fixed">
+		<parent link="link1"/>
+		<child link="right_wall"/>
+		<origin xyz="0.24 0 0.185"/>
+	</joint>
+	
+	<link name="right_end">
+		<xacro:visual2 length="0.02" width="1" height="0.32" color="red"/>
+		<xacro:inertial_ mass="1"/>
+	</link>
+	
+	<joint name="right_end_joint" type="fixed">
+		<parent link="link1"/>
+		<child link="right_end"/>
+		<origin xyz="0.49 0 0.185"/>
+	</joint>
+	
+	<link name="left_wall">
+		<xacro:visual2 length="0.02" width="1" height="0.32" color="red"/>
+		<xacro:inertial_ mass="1"/>
+	</link>
+	
+	<joint name="left_wall_joint" type="fixed">
+		<parent link="link1"/>
+		<child link="left_wall"/>
+		<origin xyz="-0.24 0 0.185"/>
+	</joint>
+	
+	<link name="left_end">
+		<xacro:visual2 length="0.02" width="1" height="0.32" color="red"/>
+		<xacro:inertial_ mass="1"/>
+	</link>
+	
+	<joint name="left_end_joint" type="fixed">
+		<parent link="link1"/>
+		<child link="left_end"/>
+		<origin xyz="-0.49 0 0.185"/>
+	</joint>
+	
+	<link name="front_right_leg">
+		<xacro:visual2 length="0.3" width="0.3" height="0.5" color="black"/>
+		<xacro:inertial_ mass="5"/>
+	</link>
+	
+	<joint name="front_right_leg_joint" type="fixed">
+		<parent link="link1"/>
+		<child link="front_right_leg"/>
+		<origin xyz="0.35 0.35 -0.275"/>
+	</joint>
+	
+	<link name="back_right_leg">
+		<xacro:visual2 length="0.3" width="0.3" height="0.5" color="black"/>
+		<xacro:inertial_ mass="5"/>
+	</link>
+	
+	<joint name="back_right_leg_joint" type="fixed">
+		<parent link="link1"/>
+		<child link="back_right_leg"/>
+		<origin xyz="0.35 -0.35 -0.275"/>
+	</joint>
+
+	<link name="front_left_leg">
+		<xacro:visual2 length="0.3" width="0.3" height="0.5" color="black"/>
+		<xacro:inertial_ mass="5"/>
+	</link>
+	
+	<joint name="front_left_leg_joint" type="fixed">
+		<parent link="link1"/>
+		<child link="front_left_leg"/>
+		<origin xyz="-0.35 0.35 -0.275"/>
+	</joint>
+	
+	<link name="back_left_leg">
+		<xacro:visual2 length="0.3" width="0.3" height="0.5" color="black"/>
+		<xacro:inertial_ mass="5"/>
+	</link>
+	
+	<joint name="back_left_leg_joint" type="fixed">
+		<parent link="link1"/>
+		<child link="back_left_leg"/>
+		<origin xyz="-0.35 -0.35 -0.275"/>
+	</joint>
+
+	<link name="first_floor">
+		<xacro:visual2 length="1" width="1" height="0.05" color="blue"/>
+		<xacro:inertial_ mass="1"/>
+	</link>
+	
+	<joint name="first_floor_joint" type="fixed">
+		<parent link="middle_wall"/>
+		<child link="first_floor"/>
+		<origin xyz="0 0 0.185"/>
+	</joint>
+	
+	<link name="box">
+		<xacro:visual2 length="0.2" width="1" height="0.05" color="white"/>
+		<xacro:inertial_ mass="1"/>
+	</link>
+	
+	<joint name="box_joint" type="fixed">
+		<parent link="link1"/>
+		<child link="box"/>
+		<origin xyz="0.36 0 0.05"/>
+	</joint>
+	
+	<link name="first_cover">
+		<xacro:visual2 length="1" width="0.02" height="0.3" color="orange"/>
+		<xacro:inertial_ mass="1"/>
+	</link>
+	
+	<joint name="first_cover_joint" type="fixed">
+		<parent link="first_floor"/>
+		<child link="first_cover"/>
+		<origin xyz="0 -0.51 -0.14"/>
+	</joint>
+
+	<link name="first_middle">
+		<xacro:visual2 length="0.02" width="1" height="0.32" color="red"/>
+		<xacro:inertial_ mass="1"/>
+	</link>
+	
+	<joint name="first_middle_joint" type="fixed">
+		<parent link="first_floor"/>
+		<child link="first_middle"/>
+		<origin xyz="0 0 0.185"/>
+	</joint>
+	
+	<link name="first_right">
+		<xacro:visual2 length="0.02" width="1" height="0.32" color="red"/>
+		<xacro:inertial_ mass="1"/>
+	</link>
+	
+	<joint name="first_right_joint" type="fixed">
+		<parent link="first_floor"/>
+		<child link="first_right"/>
+		<origin xyz="0.24 0 0.185"/>
+	</joint>
+	
+	<link name="first_right_end">
+		<xacro:visual2 length="0.02" width="1" height="0.32" color="red"/>
+		<xacro:inertial_ mass="1"/>
+	</link>
+	
+	<joint name="frist_right_end_joint" type="fixed">
+		<parent link="first_floor"/>
+		<child link="first_right_end"/>
+		<origin xyz="0.49 0 0.185"/>
+	</joint>
+	
+	<link name="first_left">
+		<xacro:visual2 length="0.02" width="1" height="0.32" color="red"/>
+		<xacro:inertial_ mass="1"/>
+	</link>
+	
+	<joint name="first_left_joint" type="fixed">
+		<parent link="first_floor"/>
+		<child link="first_left"/>
+		<origin xyz="-0.24 0 0.185"/>
+	</joint>
+	
+	<link name="first_left_end">
+		<xacro:visual2 length="0.02" width="1" height="0.32" color="red"/>
+		<xacro:inertial_ mass="1"/>
+	</link>
+	
+	<joint name="first_left_end_joint" type="fixed">
+		<parent link="first_floor"/>
+		<child link="first_left_end"/>
+		<origin xyz="-0.49 0 0.185"/>
+	</joint>
+	
+	<link name="second_floor">
+		<xacro:visual2 length="1.0" width="1" height="0.05" color="blue"/>
+		<xacro:inertial_ mass="1"/>
+	</link>
+	
+	<joint name="second_floor_joint" type="fixed">
+		<parent link="first_middle"/>
+		<child link="second_floor"/>
+		<origin xyz="0 0 0.185"/>
+	</joint>
+	
+	<link name="second_cover">
+		<xacro:visual2 length="1" width="0.02" height="0.3" color="orange"/>
+		<xacro:inertial_ mass="1"/>
+	</link>
+	
+	<joint name="second_cover_joint" type="fixed">
+		<parent link="second_floor"/>
+		<child link="second_cover"/>
+		<origin xyz="0 -0.51 -0.14"/>
+	</joint>
+
+	<link name="second_middle">
+		<xacro:visual2 length="0.02" width="1" height="0.32" color="red"/>
+		<xacro:inertial_ mass="1"/>
+	</link>
+	
+	<joint name="second_middle_joint" type="fixed">
+		<parent link="second_floor"/>
+		<child link="second_middle"/>
+		<origin xyz="0 0 0.185"/>
+	</joint>
+	
+	<link name="second_right">
+		<xacro:visual2 length="0.02" width="1" height="0.32" color="red"/>
+		<xacro:inertial_ mass="1"/>
+	</link>
+	
+	<joint name="second_right_joint" type="fixed">
+		<parent link="second_floor"/>
+		<child link="second_right"/>
+		<origin xyz="0.24 0 0.185"/>
+	</joint>
+	
+	<link name="second_right_end">
+		<xacro:visual2 length="0.02" width="1" height="0.32" color="red"/>
+		<xacro:inertial_ mass="1"/>
+	</link>
+	
+	<joint name="second_right_end_joint" type="fixed">
+		<parent link="second_floor"/>
+		<child link="second_right_end"/>
+		<origin xyz="0.49 0 0.185"/>
+	</joint>
+	
+	<link name="second_left">
+		<xacro:visual2 length="0.02" width="1" height="0.32" color="red"/>
+		<xacro:inertial_ mass="1"/>
+	</link>
+	
+	<joint name="second_left_joint" type="fixed">
+		<parent link="second_floor"/>
+		<child link="second_left"/>
+		<origin xyz="-0.24 0 0.185"/>
+	</joint>
+	
+	<link name="second_left_end">
+		<xacro:visual2 length="0.02" width="1" height="0.32" color="red"/>
+		<xacro:inertial_ mass="1"/>
+	</link>
+	
+	<joint name="second_left_end_joint" type="fixed">
+		<parent link="second_floor"/>
+		<child link="second_left_end"/>
+		<origin xyz="-0.49 0 0.185"/>
+	</joint>
+	
+	<link name="third_floor">
+		<xacro:visual2 length="1.0" width="1" height="0.05" color="blue"/>
+		<xacro:inertial_ mass="1"/>
+	</link>
+	
+	<joint name="third_floor_joint" type="fixed">
+		<parent link="second_middle"/>
+		<child link="third_floor"/>
+		<origin xyz="0 0 0.185"/>
+	</joint>
+	
+	<link name="third_cover">
+		<xacro:visual2 length="1" width="0.02" height="0.3" color="orange"/>
+		<xacro:inertial_ mass="1"/>
+	</link>
+	
+	<joint name="third_cover_joint" type="fixed">
+		<parent link="third_floor"/>
+		<child link="third_cover"/>
+		<origin xyz="0 -0.51 -0.14"/>
+	</joint>
+
+	<link name="third_middle">
+		<xacro:visual2 length="0.02" width="1" height="0.32" color="red"/>
+		<xacro:inertial_ mass="1"/>
+	</link>
+	
+	<joint name="third_middle_joint" type="fixed">
+		<parent link="third_floor"/>
+		<child link="third_middle"/>
+		<origin xyz="0 0 0.185"/>
+	</joint>
+
+	<link name="third_right">
+		<xacro:visual2 length="0.02" width="1" height="0.32" color="red"/>
+		<xacro:inertial_ mass="1"/>
+	</link>
+	
+	<joint name="third_right_joint" type="fixed">
+		<parent link="third_floor"/>
+		<child link="third_right"/>
+		<origin xyz="0.24 0 0.185"/>
+	</joint>
+	
+	<link name="third_right_end">
+		<xacro:visual2 length="0.02" width="1" height="0.32" color="red"/>
+		<xacro:inertial_ mass="1"/>
+	</link>
+	
+	<joint name="third_right_end_joint" type="fixed">
+		<parent link="third_floor"/>
+		<child link="third_right_end"/>
+		<origin xyz="0.49 0 0.185"/>
+	</joint>
+	
+	<link name="third_left">
+		<xacro:visual2 length="0.02" width="1" height="0.32" color="red"/>
+		<xacro:inertial_ mass="1"/>
+	</link>
+	
+	<joint name="third_left_joint" type="fixed">
+		<parent link="third_floor"/>
+		<child link="third_left"/>
+		<origin xyz="-0.24 0 0.185"/>
+	</joint>
+	
+	<link name="third_left_end">
+		<xacro:visual2 length="0.02" width="1" height="0.32" color="red"/>
+		<xacro:inertial_ mass="1"/>
+	</link>
+	
+	<joint name="third_left_end_joint" type="fixed">
+		<parent link="third_floor"/>
+		<child link="third_left_end"/>
+		<origin xyz="-0.49 0 0.185"/>
+	</joint>
+	
+	<link name="forth_floor">
+		<xacro:visual2 length="1.0" width="1" height="0.05" color="blue"/>
+		<xacro:inertial_ mass="1"/>
+	</link>
+	
+	<joint name="forth_floor_joint" type="fixed">
+		<parent link="third_middle"/>
+		<child link="forth_floor"/>
+		<origin xyz="0 0 0.185"/>
+	</joint>
+	
+	<link name="forth_cover">
+		<xacro:visual2 length="1" width="0.02" height="0.3" color="orange"/>
+		<xacro:inertial_ mass="1"/>
+	</link>
+	
+	<joint name="forth_cover_joint" type="fixed">
+		<parent link="forth_floor"/>
+		<child link="forth_cover"/>
+		<origin xyz="0 -0.51 -0.14"/>
+	</joint>
+
+</robot>
